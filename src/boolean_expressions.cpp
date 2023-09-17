@@ -65,9 +65,6 @@ int evaluate(const char *expression, const char *expression_values) {
           int val1 = values.top();
           values.pop();
 
-          char op = ops.top();
-          ops.pop();
-
           values.push(applyOp(val1, val2, op));
         }
       }
@@ -91,9 +88,6 @@ int evaluate(const char *expression, const char *expression_values) {
           int val1 = values.top();
           values.pop();
 
-          char op = ops.top();
-          ops.pop();
-
           values.push(applyOp(val1, val2, op));
         }
       }
@@ -105,16 +99,22 @@ int evaluate(const char *expression, const char *expression_values) {
   }
 
   while (!ops.empty()) {
-    int val2 = values.top();
-    values.pop();
-
-    int val1 = values.top();
-    values.pop();
-
     char op = ops.top();
     ops.pop();
 
-    values.push(applyOp(val1, val2, op));
+    if (op == NOT) {
+      int val = values.top();
+      values.pop();
+      values.push(applyOp(val, 0, op));
+    } else {
+      int val2 = values.top();
+      values.pop();
+
+      int val1 = values.top();
+      values.pop();
+
+      values.push(applyOp(val1, val2, op));
+    }
   }
 
   return values.top();

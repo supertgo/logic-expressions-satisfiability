@@ -12,7 +12,7 @@ EXE = $(BIN)/main
 TESTS = $(BIN)/tests
 
 run: $(EXE)
-	$(EXE) −a "(1 | 0) & 1" 01
+	$(EXE) −a "0 | ~( 1 & 1 )" 01
 
 tests: $(TESTS)
 	$(TESTS)
