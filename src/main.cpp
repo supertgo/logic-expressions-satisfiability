@@ -1,16 +1,9 @@
 #include "boolean_expressions.h"
 #include <iostream>
 #include <stdlib.h>
+#include <vector>
+#include "string.h"
 
-unsigned long long int string_size(const char *string) {
-  unsigned long long int size = 0;
-
-  while (string[size] != '\0') {
-    size++;
-  }
-
-  return size;
-}
 
 int main(int argc, char *argv[]) {
   try {
@@ -56,17 +49,19 @@ int main(int argc, char *argv[]) {
         combinations[i] = currentCombination;
       }
 
-      int satisfiabilityCount = 0;
-      for (int i = 0; i < numCombinations; ++i) {
-        std::cout << "Combination " << i + 1 << ": " << combinations[i]
-                  << std::endl;
+    int satisfiabilityCount = 0;
+    std::vector<std::string> satisfyingCombinations;
+
+    for (int i = 0; i < numCombinations; ++i) {
+        std::cout << "Combination " << i + 1 << ": " << combinations[i] << std::endl;
 
         if (evaluate(expression, combinations[i]) == 1) {
-          satisfiabilityCount++;
+            satisfiabilityCount++;
+            satisfyingCombinations.push_back(combinations[i]);
         }
-      }
+    }
 
-      std::cout << satisfiabilityCount << " sat count" << std::endl;
+
 
       for (int i = 0; i < eCount; ++i) {
         delete[] combinations[i];
