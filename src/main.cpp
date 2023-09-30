@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
       unsigned long long int lowerbound =
           find_next_quantificator_pos_after_index(exp_values, 0);
 
-      // tree.printTree();
+      tree.printTree();
       auto output = tree.evaluateTree(lowerbound);
       std::cout << output << std::endl;
       // tree.printTree();

@@ -86,14 +86,14 @@ void BinaryTree::evaluateTree(Node *root, std::string &expression, int index) {
   } else {
     int left_result = root->left->result;
     int right_result = root->right->result;
-    // std::cout << left_result << " lft result" << std::endl;
-    // std::cout << right_result << " rght result" << std::endl;
 
+    // std::cout << root->value << " parent" << std::endl;
+    // std::cout << root->left->value << " left" << std::endl;
+    // std::cout << root->right->value << " right" << std::endl;
+    // std::cout << root->left->result << " lft result" << std::endl;
+    // std::cout << root->right->result << " rgt result" << std::endl;
     if (left_result == 2 && right_result == 2) {
       unsigned long long int str_size = root->value.length();
-      // std::cout << root->value << " parent" << std::endl;
-      // std::cout << root->left->value << " left" << std::endl;
-      // std::cout << root->right->value << " right" << std::endl;
       root->result = 2;
       for (unsigned long long int i = 0; i < str_size; i++) {
         if (root->right->value[i] != root->left->value[i]) {
@@ -129,6 +129,7 @@ void BinaryTree::evaluateTree(Node *root, std::string &expression, int index) {
 
         if (root->value[pos_insert] == 'a') {
           root->result = 0;
+          return;
         }
 
         if (right_result) {
@@ -138,8 +139,11 @@ void BinaryTree::evaluateTree(Node *root, std::string &expression, int index) {
         }
         // std::cout << value << " aqui que foi" << std::endl;
         // std::cout << pos_insert << " pos_insert" << std::endl;
-        root->value[pos_insert] = value[pos_insert];
+        root->value = value;
+        //std::cout << root->value << " after" << std::endl;
+        root->result = 1;
       } else {
+        //std::cout << root->value << " aqui que foi o 0" << std::endl;
         root->result = 0;
         root->value[index] = '0';
       }

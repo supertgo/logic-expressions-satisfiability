@@ -12,13 +12,15 @@ EXE = $(BIN)/main
 TESTS = $(BIN)/tests
 
 run: $(EXE)
-	$(EXE) -s "0 | 1 & 2 " aaa
-	$(EXE) -s "0 | 1 & 2 " a1a
-	$(EXE) -s "0 | 1 & 2 | ( 3 | 4 )" e11ee
-	$(EXE) -s "0 | 1 & 2 | ( 3 | 4 )" a11aa
-	$(EXE) -s "0 | 1 & 2 " 0e0
-	$(EXE) -s "0 | 1 & 2 " e00
-	$(EXE) -s "0 | 1 & 2 " e11
+	$(EXE) -s "0 & 1 | 2 & 3" ee10
+	# $(EXE) -s "0 | 1 & 2 " 1ea
+	#$(EXE) -s "0 | 1 & 2 " aaa
+	# $(EXE) -s "0 | 1 & 2 " a1a
+	# $(EXE) -s "0 | 1 & 2 | ( 3 | 4 )" e11ee
+	# $(EXE) -s "0 | 1 & 2 | ( 3 | 4 )" a11aa
+	# $(EXE) -s "0 | 1 & 2 " 0e0
+	# $(EXE) -s "0 | 1 & 2 " e00
+	# $(EXE) -s "0 | 1 & 2 " e11
 
 tests: $(TESTS)
 	$(TESTS)
