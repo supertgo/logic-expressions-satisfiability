@@ -1,5 +1,7 @@
+#include <string>
 #ifndef BOOL_EXPR
 #define BOOL_EXPR
+
 
 /**
  * Determinar a precedência de um operador lógico.
@@ -45,23 +47,27 @@ int applyOp(int a, int b, char op);
  */
 int returnASCIIDigit(const char c);
 
-
-
 /**
  * Avaliar uma expressão lógica com valores fornecidos.
  *
  * Esta função recebe uma expressão lógica no formato de string 'expression'
  * e um conjunto de valores 'expression_values' para as variáveis da expressão.
- * Ela avalia a expressão lógica usando os valores fornecidos e retorna o resultado.
+ * Ela avalia a expressão lógica usando os valores fornecidos e retorna o
+ * resultado.
  *
- * @param expression A expressão lógica a ser avaliada (por exemplo, "(0 & 1 | 2").
- * @param expression_values Uma string contendo os valores das variáveis na expressão
- *                          no mesmo formato das variáveis (por exemplo, "1,0,1").
- * @return O resultado da avaliação da expressão lógica com os valores fornecidos.
+ * @param expression A expressão lógica a ser avaliada (por exemplo, "(0 & 1 |
+ * 2").
+ * @param expression_values Uma string contendo os valores das variáveis na
+ * expressão no mesmo formato das variáveis (por exemplo, "1,0,1").
+ * @return O resultado da avaliação da expressão lógica com os valores
+ * fornecidos.
  *         - Retorna 1 para verdadeiro.
  *         - Retorna 0 para falso.
- *         - Retorna -1 em caso de erro, como expressão malformada ou valores ausentes.
+ *         - Retorna -1 em caso de erro, como expressão malformada ou valores
+ * ausentes.
  */
 int evaluate(const char *expression, const char *expression_values);
 
+unsigned long long int
+find_next_quantificator_pos_after_index(std::string expression, int index);
 #endif // !DEBUG
