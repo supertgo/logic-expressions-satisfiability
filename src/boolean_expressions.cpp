@@ -1,7 +1,7 @@
 #include "boolean_expressions.h"
+#include "stack.h"
 #include <cctype>
 #include <iostream>
-#include <stack>
 #include <string>
 
 #define DISJUNCTION '|'
@@ -36,8 +36,8 @@ int returnASCIIDigit(const char c) { return c - '0'; }
 int evaluate(const char *expression, const char *expression_values) {
   int i = 0;
 
-  std::stack<int> values;
-  std::stack<char> ops;
+  Stack<int> values;
+  Stack<char> ops;
 
   while (expression[i] != '\0') {
     if (expression[i] == ' ') {

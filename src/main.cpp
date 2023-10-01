@@ -1,6 +1,5 @@
 #include "binary_tree.h"
 #include "boolean_expressions.h"
-#include "string.h"
 #include <iostream>
 
 int main(int argc, char *argv[]) {
@@ -25,7 +24,6 @@ int main(int argc, char *argv[]) {
           find_next_quantificator_pos_after_index(exp_values, 0);
 
       std::cout << tree.evaluateTree(lowerbound) << std::endl;
-
       break;
     }
   } catch (const std::exception &e) {

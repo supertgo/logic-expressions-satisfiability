@@ -1,7 +1,8 @@
 #include "binary_tree.h"
 #include "boolean_expressions.h"
 #include <iostream>
-#include <queue>
+
+#define LONG unsigned long long int
 
 BinaryTree::BinaryTree(std::string &input, std::string &exp)
     : root(nullptr), expression("") {
@@ -53,24 +54,22 @@ void BinaryTree::evaluateTree(Node *root, std::string &expression, int index) {
 
   if (root->left == nullptr && root->right == nullptr) {
     evaluateNode(root);
-    return; 
+    return;
   }
 
-  const unsigned long long int str_size = root->value.length();
+  const LONG str_size = root->value.length();
 
   int left_result = root->left->result;
   int right_result = root->right->result;
-  unsigned long long int pos_insert =
-      find_next_quantificator_pos_after_index(root->value, index);
+  LONG pos_insert = find_next_quantificator_pos_after_index(root->value, index);
 
-  // Constants for result values
   const int RESULT_0 = 0;
   const int RESULT_1 = 1;
   const int RESULT_2 = 2;
 
   if (left_result == RESULT_2 && right_result == RESULT_2) {
     root->result = RESULT_2;
-    for (unsigned long long int i = 0; i < str_size; i++) {
+    for (LONG i = 0; i < str_size; i++) {
       if (root->right->value[i] != root->left->value[i]) {
         root->value[i] = 'a';
       } else {
@@ -91,7 +90,7 @@ void BinaryTree::evaluateTree(Node *root, std::string &expression, int index) {
     root->result = RESULT_1;
   } else if (left_result != RESULT_0 && right_result != RESULT_0 &&
              (left_result != right_result)) {
-    for (unsigned long long int i = 0; i < str_size; i++) {
+    for (LONG i = 0; i < str_size; i++) {
       if (root->right->value[i] != root->left->value[i]) {
         if (root->right->value[i] == 'a') {
           root->value[i] = root->left->value[i];
