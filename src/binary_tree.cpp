@@ -34,36 +34,6 @@ Node *BinaryTree::buildTree(std::string &input, size_t index) {
   return node;
 }
 
-void BinaryTree::printTree() {
-  if (!root) {
-    std::cout << "Tree is empty." << std::endl;
-    return;
-  }
-
-  std::queue<Node *> nodesQueue;
-  nodesQueue.push(root);
-
-  while (!nodesQueue.empty()) {
-    int levelSize = nodesQueue.size();
-
-    for (int i = 0; i < levelSize; i++) {
-      Node *node = nodesQueue.front();
-      nodesQueue.pop();
-
-      std::cout << node->value << " ";
-
-      if (node->left) {
-        nodesQueue.push(node->left);
-      }
-      if (node->right) {
-        nodesQueue.push(node->right);
-      }
-    }
-
-    std::cout << std::endl;
-  }
-}
-
 std::string BinaryTree::evaluateTree(int start = 0) {
   evaluateTree(root, expression, start);
 
@@ -81,78 +51,67 @@ void BinaryTree::evaluateTree(Node *root, std::string &expression, int index) {
   evaluateTree(root->left, expression, index + 1);
   evaluateTree(root->right, expression, index + 1);
 
-  if (root->left == 0 && root->right == 0) {
+  if (root->left == nullptr && root->right == nullptr) {
     evaluateNode(root);
-  } else {
-    int left_result = root->left->result;
-    int right_result = root->right->result;
+    return; 
+  }
 
-    // std::cout << root->value << " parent" << std::endl;
-    // std::cout << root->left->value << " left" << std::endl;
-    // std::cout << root->right->value << " right" << std::endl;
-    // std::cout << root->left->result << " lft result" << std::endl;
-    // std::cout << root->right->result << " rgt result" << std::endl;
-    if (left_result == 2 && right_result == 2) {
-      unsigned long long int str_size = root->value.length();
-      root->result = 2;
-      for (unsigned long long int i = 0; i < str_size; i++) {
-        if (root->right->value[i] != root->left->value[i]) {
-          // std:: cout << "i: " << i << std::endl;
-          // std::cout << root->left->value[i] << " left" << std::endl;
-          // std::cout << root->right->value[i] << " right" << std::endl;
-          // std::cout << root->right->value << " parent" << std::endl;
-          root->value[i] = 'a';
-          // std::cout << root->right->value << " after parent" << std::endl;
-        } else {
-          root->value[i] = root->right->value[i];
-        }
-      }
-    } else if (left_result != -1 && right_result != -1) {
-      if (left_result == 1 && right_result == left_result) {
-        unsigned long long int pos_insert =
-            find_next_quantificator_pos_after_index(root->value, index);
+  const unsigned long long int str_size = root->value.length();
 
-        // std::cout << root->value[pos_insert] << " quantificador "<<
-        // std::endl;
-        //  std::cout << root->value << " before" << std::endl;
-        root->value[pos_insert] = 'a';
-        root->result = 2;
-        // std::cout << root->value << " deu bom nos dois" << std::endl;
-      } else if (left_result || right_result) {
-        std::string value;
+  int left_result = root->left->result;
+  int right_result = root->right->result;
+  unsigned long long int pos_insert =
+      find_next_quantificator_pos_after_index(root->value, index);
 
-        unsigned long long int pos_insert =
-            find_next_quantificator_pos_after_index(root->value, index);
+  // Constants for result values
+  const int RESULT_0 = 0;
+  const int RESULT_1 = 1;
+  const int RESULT_2 = 2;
 
-        // std::cout << root->value[pos_insert] << " quantificador "<<
-        // std::endl;
-
-        if (root->value[pos_insert] == 'a') {
-          root->result = 0;
-          return;
-        }
-
-        if (right_result) {
-          value = root->right->value;
-        } else {
-          value = root->left->value;
-        }
-        // std::cout << value << " aqui que foi" << std::endl;
-        // std::cout << pos_insert << " pos_insert" << std::endl;
-        root->value = value;
-        //std::cout << root->value << " after" << std::endl;
-        root->result = 1;
+  if (left_result == RESULT_2 && right_result == RESULT_2) {
+    root->result = RESULT_2;
+    for (unsigned long long int i = 0; i < str_size; i++) {
+      if (root->right->value[i] != root->left->value[i]) {
+        root->value[i] = 'a';
       } else {
-        //std::cout << root->value << " aqui que foi o 0" << std::endl;
-        root->result = 0;
-        root->value[index] = '0';
+        root->value[i] = root->right->value[i];
       }
     }
+  } else if (left_result == RESULT_1 && right_result == left_result) {
+    root->value[pos_insert] = 'a';
+    root->result = RESULT_2;
+  } else if ((left_result || right_result) &&
+             (left_result == RESULT_0 || right_result == RESULT_0)) {
+    if (root->value[pos_insert] == 'a') {
+      root->result = RESULT_0;
+      return;
+    }
+    std::string value = right_result ? root->right->value : root->left->value;
+    root->value = value;
+    root->result = RESULT_1;
+  } else if (left_result != RESULT_0 && right_result != RESULT_0 &&
+             (left_result != right_result)) {
+    for (unsigned long long int i = 0; i < str_size; i++) {
+      if (root->right->value[i] != root->left->value[i]) {
+        if (root->right->value[i] == 'a') {
+          root->value[i] = root->left->value[i];
+        } else if (root->left->value[i] == 'a') {
+          root->value[i] = root->right->value[i];
+        } else {
+          root->value[i] = 'a';
+        }
+      } else {
+        root->value[i] = root->right->value[i];
+      }
+    }
+    root->result = RESULT_1;
+  } else {
+    root->result = RESULT_0;
+    root->value[index] = '0';
   }
 }
 
 void BinaryTree::evaluateNode(Node *node) {
-  // calls only for leaf nodes
   node->result = evaluate(expression.c_str(), node->value.c_str());
 }
 
@@ -160,6 +119,7 @@ void BinaryTree::destroyTree(Node *node) {
   if (!node) {
     return;
   }
+
   destroyTree(node->left);
   destroyTree(node->right);
   delete node;

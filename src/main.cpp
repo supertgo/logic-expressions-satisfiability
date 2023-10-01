@@ -2,8 +2,6 @@
 #include "boolean_expressions.h"
 #include "string.h"
 #include <iostream>
-#include <unistd.h>
-#include <vector>
 
 int main(int argc, char *argv[]) {
   try {
@@ -22,15 +20,11 @@ int main(int argc, char *argv[]) {
     case 's':
       std::string exp_values = expression_values;
       std::string exp = expression;
-
       BinaryTree tree(exp_values, exp);
       unsigned long long int lowerbound =
           find_next_quantificator_pos_after_index(exp_values, 0);
 
-      tree.printTree();
-      auto output = tree.evaluateTree(lowerbound);
-      std::cout << output << std::endl;
-      // tree.printTree();
+      std::cout << tree.evaluateTree(lowerbound) << std::endl;
 
       break;
     }
