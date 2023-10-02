@@ -58,17 +58,14 @@ void BinaryTree::evaluateTree(Node *root, std::string &expression, int index) {
   }
 
   const LONG str_size = root->value.length();
-
   int left_result = root->left->result;
   int right_result = root->right->result;
   LONG pos_insert = find_next_quantificator_pos_after_index(root->value, index);
 
   const int RESULT_0 = 0;
   const int RESULT_1 = 1;
-  const int RESULT_2 = 2;
 
-  if (left_result == RESULT_2 && right_result == RESULT_2) {
-    root->result = RESULT_2;
+  if (left_result == RESULT_1 && right_result == left_result) {
     for (LONG i = 0; i < str_size; i++) {
       if (root->right->value[i] != root->left->value[i]) {
         root->value[i] = 'a';
@@ -76,33 +73,14 @@ void BinaryTree::evaluateTree(Node *root, std::string &expression, int index) {
         root->value[i] = root->right->value[i];
       }
     }
-  } else if (left_result == RESULT_1 && right_result == left_result) {
-    root->value[pos_insert] = 'a';
-    root->result = RESULT_2;
-  } else if ((left_result || right_result) &&
-             (left_result == RESULT_0 || right_result == RESULT_0)) {
+    root->result = RESULT_1;
+  } else if (left_result || right_result) {
     if (root->value[pos_insert] == 'a') {
       root->result = RESULT_0;
       return;
     }
     std::string value = right_result ? root->right->value : root->left->value;
     root->value = value;
-    root->result = RESULT_1;
-  } else if (left_result != RESULT_0 && right_result != RESULT_0 &&
-             (left_result != right_result)) {
-    for (LONG i = 0; i < str_size; i++) {
-      if (root->right->value[i] != root->left->value[i]) {
-        if (root->right->value[i] == 'a') {
-          root->value[i] = root->left->value[i];
-        } else if (root->left->value[i] == 'a') {
-          root->value[i] = root->right->value[i];
-        } else {
-          root->value[i] = 'a';
-        }
-      } else {
-        root->value[i] = root->right->value[i];
-      }
-    }
     root->result = RESULT_1;
   } else {
     root->result = RESULT_0;
