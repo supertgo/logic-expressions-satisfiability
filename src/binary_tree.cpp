@@ -12,8 +12,6 @@ BinaryTree::BinaryTree(std::string &input, std::string &exp)
 
 BinaryTree::~BinaryTree() { destroyTree(root); }
 
-std::string BinaryTree::getExpression() const { return expression; }
-
 Node *BinaryTree::buildTree(std::string &input, size_t index) {
   Node *node = new Node(input);
 
