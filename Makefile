@@ -12,7 +12,8 @@ EXE = $(BIN)/main
 all: run
 
 run: $(EXE)
-	$(EXE) -a "~ ~ 0 | 1" 10
+	#$(EXE) -a "0|~ ~ 1" 01
+	$(EXE) -s "0 | ~ ~ 1" ea
 
 $(BIN)/main: $(OBJS)
 	$(CC) -pg -g -o $(BIN)/main $(OBJS)

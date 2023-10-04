@@ -74,7 +74,7 @@ int evaluate(const char *expression, const char *expression_values) {
         ops.pop();
     } else {
       while (!ops.empty() && !values.empty() &&
-             precedence(ops.top()) >= precedence(expression[i])) {
+             precedence(ops.top()) > precedence(expression[i])) {
         char op = ops.top();
         ops.pop();
 
