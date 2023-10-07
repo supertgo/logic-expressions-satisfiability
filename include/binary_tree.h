@@ -9,9 +9,9 @@ struct Node {
   Node *right;
   int result;
 
-  Node(std::string &val) : value(val), left(nullptr), right(nullptr), result(-1) {}
+  Node(std::string &val)
+      : value(val), left(nullptr), right(nullptr), result(-1) {}
 };
-
 
 class BinaryTree {
 public:
@@ -24,7 +24,7 @@ private:
   std::string expression;
   Node *buildTree(std::string &input, size_t index);
   void destroyTree(Node *node);
-  void evaluateTree(Node* node, std::string &genericStr, int index);
+  void evaluateTree(Node *node, std::string &genericStr, int index);
   void evaluateNode(Node *node);
 };
 

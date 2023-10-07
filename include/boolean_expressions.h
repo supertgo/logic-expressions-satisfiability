@@ -68,6 +68,6 @@ int returnASCIIDigit(const char c);
  */
 int evaluate(const char *expression, const char *expression_values);
 
-unsigned long long int
+unsigned int
 find_next_quantificator_pos_after_index(std::string expression, int index);
 #endif // !DEBUG

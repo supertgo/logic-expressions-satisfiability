@@ -121,9 +121,9 @@ int evaluate(const char *expression, const char *expression_values) {
   return values.top();
 }
 
-unsigned long long int
+unsigned int
 find_next_quantificator_pos_after_index(std::string expression, int index) {
-  unsigned long long int pos_insert = index;
+  unsigned int pos_insert = index;
   while (pos_insert < expression.length() && expression[pos_insert] != 'e' &&
          expression[pos_insert] != 'a') {
     pos_insert++;

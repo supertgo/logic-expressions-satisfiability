@@ -2,11 +2,10 @@
 #include "boolean_expressions.h"
 #include <iostream>
 
-#define LONG unsigned long long int
+#define LONG unsigned int
 
 BinaryTree::BinaryTree(std::string &input, std::string &exp)
-    : root(nullptr), expression("") {
-  expression = exp;
+    : root(nullptr), expression(exp) {
   root = buildTree(input, 0);
 }
 
@@ -15,19 +14,18 @@ BinaryTree::~BinaryTree() { destroyTree(root); }
 Node *BinaryTree::buildTree(std::string &input, size_t index) {
   Node *node = new Node(input);
 
-  while (index < input.length() && input[index] != 'e' && input[index] != 'a') {
-    index++;
-  }
+  for (LONG i = index; i < input.length(); i++) {
+    if (input[i] == 'e' || input[i] == 'a') {
+      std::string left_values = input;
+      left_values[i] = '0';
+      node->left = buildTree(left_values, i + 1);
 
-  if (input[index] == 'a' || input[index] == 'e') {
-    node->left = new Node(input);
-    node->left->value[index] = '0';
+      std::string right_values = input;
+      right_values[i] = '1';
+      node->right = buildTree(right_values, i + 1);
 
-    node->right = new Node(input);
-    node->right->value[index] = '1';
-
-    node->left = buildTree(node->left->value, index + 1);
-    node->right = buildTree(node->right->value, index + 1);
+      break;
+    }
   }
 
   return node;
