@@ -8,7 +8,8 @@
 int main(int argc, char *argv[]) {
   try {
     if (argc != 4) {
-      throw std::runtime_error("argc must be 3");
+      throw std::runtime_error(
+          "Argumentos inválidos: São necessários 3 além do programa.");
     }
 
     char *method = argv[1];
@@ -21,10 +22,11 @@ int main(int argc, char *argv[]) {
     getrusage(RUSAGE_SELF, &start);
 
     switch (method[1]) {
-    case 'a':
+    case 'a': {
       std::cout << evaluate(expression, expression_values) << std::endl;
       break;
-    case 's':
+    }
+    case 's': {
       std::string exp_values = expression_values;
       std::string exp = expression;
       BinaryTree tree(exp_values, exp);
@@ -32,7 +34,10 @@ int main(int argc, char *argv[]) {
           find_next_quantificator_pos_after_index(exp_values, 0);
 
       std::cout << tree.evaluateTree(lowerbound) << std::endl;
-
+      break;
+    }
+    default:
+      throw std::runtime_error("Apenas -s ou -a.");
       break;
     }
     getrusage(RUSAGE_SELF, &end);
