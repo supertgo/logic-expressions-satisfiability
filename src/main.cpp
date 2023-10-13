@@ -1,6 +1,9 @@
 #include "binary_tree.h"
 #include "boolean_expressions.h"
 #include <iostream>
+#include <sys/resource.h>
+#include <sys/time.h>
+#include "timeed.h"
 
 int main(int argc, char *argv[]) {
   try {
@@ -11,6 +14,11 @@ int main(int argc, char *argv[]) {
     char *method = argv[1];
     char *expression = argv[2];
     char *expression_values = argv[3];
+    struct timespec clockStart, clockEnd;
+    clock_gettime(CLOCK_REALTIME, &clockStart);
+
+    struct rusage start, end;
+    getrusage(RUSAGE_SELF, &start);
 
     switch (method[1]) {
     case 'a':
@@ -27,6 +35,14 @@ int main(int argc, char *argv[]) {
 
       break;
     }
+    getrusage(RUSAGE_SELF, &end);
+    clock_gettime(CLOCK_REALTIME, &clockEnd);
+    std::cout << "Tempo de relógio: " << clock_time(&clockStart, &clockEnd)
+              << " segundos" << std::endl;
+    std::cout << "Tempo de usuário: " << user_time(&start, &end) << " segundos"
+              << std::endl;
+    std::cout << "Tempo de sistema: " << system_time(&start, &end) << " segundos"
+              << std::endl;
   } catch (const std::exception &e) {
     std::cerr << "Exception: " << e.what() << std::endl;
     return 1;
