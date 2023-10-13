@@ -46,11 +46,17 @@ int evaluate(const char *expression, const char *expression_values) {
     } else if (expression[i] == '(') {
       ops.push(expression[i]);
     } else if (isdigit(expression[i])) {
-      int expression_digit = returnASCIIDigit(expression[i]);
+      std::string digit;
+      while (isdigit(expression[i])) {
+        digit.push_back(expression[i]);
+        i++;
+      }
+
+      int position = std::stoi(digit);
       // exception if the index is out of bound
-      unsigned int digit =
-          returnASCIIDigit(expression_values[expression_digit]);
-      values.push(digit);
+      unsigned int value = returnASCIIDigit(expression_values[position]);
+      values.push(value);
+      continue;
     } else if (expression[i] == ')') {
       while (!ops.empty() && ops.top() != '(') {
         char op = ops.top();
@@ -121,8 +127,8 @@ int evaluate(const char *expression, const char *expression_values) {
   return values.top();
 }
 
-unsigned int
-find_next_quantificator_pos_after_index(std::string expression, int index) {
+unsigned int find_next_quantificator_pos_after_index(std::string expression,
+                                                     int index) {
   unsigned int pos_insert = index;
   while (pos_insert < expression.length() && expression[pos_insert] != 'e' &&
          expression[pos_insert] != 'a') {

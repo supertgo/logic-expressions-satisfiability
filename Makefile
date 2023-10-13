@@ -7,9 +7,9 @@ BIN = bin
 HDRS = $(INC)/stack.h $(INC)/boolean_expressions.h $(INC)/binary_tree.h $(INC)/timeed.h
 OBJS = $(OBJ)/main.o $(OBJ)/stack.o $(OBJ)/boolean_expressions.o $(OBJ)/binary_tree.o $(OBJ)/timeed.o
 CFLAGS = -pg -Wall -g -c -I$(INC) -std=c++11
-EXE = $(BIN)/main
+EXE = $(BIN)/tp1.out
 
-all: run gprof
+all: run
 
 run: $(EXE)
 	#$(EXE) -a "0|~ ~ 1" 01
@@ -30,8 +30,8 @@ gprof: $(BIN)/main
 	gprof $(EXE) gmon.out > /tmp/1600_gprof.txt
 
 
-$(BIN)/main: $(OBJS)
-	$(CC) -pg -g -o $(BIN)/main $(OBJS)
+$(BIN)/tp1.out: $(OBJS)
+	$(CC) -pg -g -o $(BIN)/tp1.out $(OBJS)
 
 $(OBJ)/%.o: $(SRC)/%.cpp $(HDRS)
 	$(CC) $(CFLAGS) -o $@ $<
