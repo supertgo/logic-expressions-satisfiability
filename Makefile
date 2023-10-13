@@ -12,6 +12,7 @@ EXE = $(BIN)/tp1.out
 all: run
 
 run: $(EXE)
+	$(EXE) -a "0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10" 00000000001
 
 $(BIN)/tp1.out: $(OBJS)
 	$(CC) -pg -g -o $(BIN)/tp1.out $(OBJS)

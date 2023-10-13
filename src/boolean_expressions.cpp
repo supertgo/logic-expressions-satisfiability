@@ -1,5 +1,6 @@
 #include "boolean_expressions.h"
 #include "stack.h"
+#include "string.h"
 #include <cctype>
 #include <iostream>
 #include <string>
@@ -35,7 +36,7 @@ int returnASCIIDigit(const char c) { return c - '0'; }
 
 int evaluate(const char *expression, const char *expression_values) {
   int i = 0;
-
+  int length = strlen(expression_values);
   Stack<int> values;
   Stack<char> ops;
 
@@ -53,8 +54,15 @@ int evaluate(const char *expression, const char *expression_values) {
       }
 
       int position = std::stoi(digit);
-      // exception if the index is out of bound
-      unsigned int value = returnASCIIDigit(expression_values[position]);
+      int value = 0;
+
+      if (position >= 0 && position < length) {
+        value = returnASCIIDigit(expression_values[position]);
+      } else {
+        throw std::runtime_error(
+            "A posição é maior do que o maior index da string: " +
+            std::to_string(position));
+      }
       values.push(value);
       continue;
     } else if (expression[i] == ')') {
