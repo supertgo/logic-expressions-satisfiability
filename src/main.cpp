@@ -29,6 +29,7 @@ int main(int argc, char *argv[]) {
       break;
     }
     default:
+      // Foi passada um parâmetro errado.
       throw std::runtime_error("Apenas -s ou -a.");
       break;
     }

@@ -9,6 +9,7 @@
 #define CONJUNCTION '&'
 #define NOT '~'
 
+// Retorna a precência de cada operador
 unsigned int precedence(char op) {
   if (op == DISJUNCTION)
     return 1;
@@ -19,6 +20,7 @@ unsigned int precedence(char op) {
   return 0;
 }
 
+// Aplica as operações booleanas, (and, or e not)
 int applyOp(int a, int b, char op) {
   switch (op) {
   case DISJUNCTION:
@@ -41,12 +43,15 @@ int evaluate(const char *expression, const char *expression_values) {
   Stack<char> ops;
 
   while (expression[i] != '\0') {
+    // Pulandos os espacos
     if (expression[i] == ' ') {
       i++;
       continue;
     } else if (expression[i] == '(') {
       ops.push(expression[i]);
     } else if (isdigit(expression[i])) {
+      // Cria uma string que representa o dígito, serve para lidar
+      // com uma quantidade mairo de váriavéis.
       std::string digit;
       while (isdigit(expression[i])) {
         digit.push_back(expression[i]);
@@ -87,6 +92,7 @@ int evaluate(const char *expression, const char *expression_values) {
       if (!ops.empty())
         ops.pop();
     } else {
+      // É um operador
       while (!ops.empty() && !values.empty() &&
              precedence(ops.top()) > precedence(expression[i])) {
         char op = ops.top();
@@ -135,6 +141,7 @@ int evaluate(const char *expression, const char *expression_values) {
   return values.top();
 }
 
+// Função que retorna próxima quantificador a partir de uma determinada posição.
 unsigned int find_next_quantificator_pos_after_index(std::string expression,
                                                      int index) {
   unsigned int pos_insert = index;
